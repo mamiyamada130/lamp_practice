@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<!-- headテンプレート読み込み -->
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   <title>商品管理</title>
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'admin.css'); ?>">
 </head>
 <body>
+<!-- ヘッダーテンプレート読み込み -->
   <?php 
   include VIEW_PATH . 'templates/header_logined.php'; 
   ?>
@@ -15,6 +17,7 @@
 
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
+<!-- データをadmin_insert_item.phpにPOST -->
     <form 
       method="post" 
       action="admin_insert_item.php" 
@@ -47,7 +50,7 @@
       <input type="submit" value="商品追加" class="btn btn-primary">
     </form>
 
-
+<!-- 商品データが存在する場合、商品一覧をテーブルで表示 -->
     <?php if(count($items) > 0){ ?>
       <table class="table table-bordered text-center">
         <thead class="thead-light">
@@ -60,6 +63,7 @@
           </tr>
         </thead>
         <tbody>
+        <!-- 商品データを取得 -->
           <?php foreach($items as $item){ ?>
           <tr class="<?php print(is_open($item) ? '' : 'close_item'); ?>">
             <td><img src="<?php print(IMAGE_PATH . $item['image']);?>" class="item_image"></td>
@@ -78,7 +82,9 @@
             </td>
             <td>
 
+              <!-- データをadmin_change_status.phpにPOST -->
               <form method="post" action="admin_change_status.php" class="operation">
+                <!-- ステータス変更 -->
                 <?php if(is_open($item) === true){ ?>
                   <input type="submit" value="公開 → 非公開" class="btn btn-secondary">
                   <input type="hidden" name="changes_to" value="close">
@@ -89,6 +95,7 @@
                 <input type="hidden" name="item_id" value="<?php print($item['item_id']); ?>">
               </form>
 
+              <!-- 商品データの削除 -->
               <form method="post" action="admin_delete_item.php">
                 <input type="submit" value="削除" class="btn btn-danger delete">
                 <input type="hidden" name="item_id" value="<?php print($item['item_id']); ?>">
@@ -104,6 +111,7 @@
     <?php } ?> 
   </div>
   <script>
+  // アラートを表示
     $('.delete').on('click', () => confirm('本当に削除しますか？'))
   </script>
 </body>
