@@ -12,6 +12,7 @@
 
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
+<!-- カートに商品がある場合、商品一覧をテーブルで表示 -->
     <?php if(count($carts) > 0){ ?>
       <table class="table table-bordered">
         <thead class="thead-light">
