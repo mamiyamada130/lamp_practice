@@ -3,7 +3,7 @@
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   <title>ログイン</title>
-  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'login.css'); ?>">
+  <link rel="stylesheet" href="<?php print(h(STYLESHEET_PATH . 'login.css')); ?>">
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header.php'; ?>
@@ -12,6 +12,7 @@
 
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
+    <!-- 名前とパスワードを入力するフォーム -->
     <form method="post" action="login_process.php" class="login_form mx-auto">
       <div class="form-group">
         <label for="name">名前: </label>
@@ -21,6 +22,7 @@
         <label for="password">パスワード: </label>
         <input type="password" name="password" id="password" class="form-control">
       </div>
+      <!-- ログインボタン -->
       <input type="submit" value="ログイン" class="btn btn-primary">
     </form>
   </div>

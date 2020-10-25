@@ -3,7 +3,7 @@
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   <title>サインアップ</title>
-  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'signup.css'); ?>">
+  <link rel="stylesheet" href="<?php print(h(STYLESHEET_PATH . 'signup.css')); ?>">
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header.php'; ?>
@@ -12,6 +12,7 @@
 
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
+    <!-- 名前、パスワード、パスワード（確認用）を入力するフォーム -->
     <form method="post" action="signup_process.php" class="signup_form mx-auto">
       <div class="form-group">
         <label for="name">名前: </label>
@@ -25,6 +26,7 @@
         <label for="password_confirmation">パスワード（確認用）: </label>
         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
       </div>
+      <!-- 登録ボタン -->
       <input type="submit" value="登録" class="btn btn-primary">
     </form>
   </div>

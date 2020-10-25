@@ -4,7 +4,7 @@
 <!-- headテンプレート読み込み -->
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   <title>商品管理</title>
-  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'admin.css'); ?>">
+  <link rel="stylesheet" href="<?php print(h(STYLESHEET_PATH . 'admin.css')); ?>">
 </head>
 <body>
 <!-- ヘッダーテンプレート読み込み -->
@@ -15,9 +15,10 @@
   <div class="container">
     <h1>商品管理</h1>
 
+    <!-- メッセージテンプレート読み込み -->
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
-<!-- データをadmin_insert_item.phpにPOST -->
+<!-- 商品追加フォーム -->
     <form 
       method="post" 
       action="admin_insert_item.php" 
@@ -65,24 +66,25 @@
         <tbody>
         <!-- 商品データを取得 -->
           <?php foreach($items as $item){ ?>
-          <tr class="<?php print(is_open($item) ? '' : 'close_item'); ?>">
-            <td><img src="<?php print(IMAGE_PATH . $item['image']);?>" class="item_image"></td>
-            <td><?php print($item['name']); ?></td>
-            <td><?php print(number_format($item['price'])); ?>円</td>
+          <!-- $itemが非公開の場合、行をグレーアウト -->
+          <tr class="<?php print(h(is_open($item) ? '' : 'close_item')); ?>">
+            <td><img src="<?php print(h(IMAGE_PATH . $item['image']));?>" class="item_image"></td>
+            <td><?php print(h($item['name'])); ?></td>
+            <!-- 3桁区切りで数値を表示 -->
+            <td><?php print(h(number_format($item['price']))); ?>円</td>
             <td>
               <form method="post" action="admin_change_stock.php">
                 <div class="form-group">
                   <!-- sqlインジェクション確認のためあえてtext -->
-                  <input  type="text" name="stock" value="<?php print($item['stock']); ?>">
+                  <input  type="text" name="stock" value="<?php print(h($item['stock'])); ?>">
                   個
                 </div>
                 <input type="submit" value="変更" class="btn btn-secondary">
-                <input type="hidden" name="item_id" value="<?php print($item['item_id']); ?>">
+                <input type="hidden" name="item_id" value="<?php print(h($item['item_id'])); ?>">
               </form>
             </td>
             <td>
 
-              <!-- データをadmin_change_status.phpにPOST -->
               <form method="post" action="admin_change_status.php" class="operation">
                 <!-- ステータス変更 -->
                 <?php if(is_open($item) === true){ ?>
@@ -92,13 +94,13 @@
                   <input type="submit" value="非公開 → 公開" class="btn btn-secondary">
                   <input type="hidden" name="changes_to" value="open">
                 <?php } ?>
-                <input type="hidden" name="item_id" value="<?php print($item['item_id']); ?>">
+                <input type="hidden" name="item_id" value="<?php print(h($item['item_id'])); ?>">
               </form>
 
               <!-- 商品データの削除 -->
               <form method="post" action="admin_delete_item.php">
                 <input type="submit" value="削除" class="btn btn-danger delete">
-                <input type="hidden" name="item_id" value="<?php print($item['item_id']); ?>">
+                <input type="hidden" name="item_id" value="<?php print(h($item['item_id'])); ?>">
               </form>
 
             </td>
