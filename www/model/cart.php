@@ -25,9 +25,10 @@ function get_user_carts($db, $user_id){
     ON
       carts.item_id = items.item_id
     WHERE
-      carts.user_id = {$user_id}
+      carts.user_id = :user_id
   ";
-  return fetch_all_query($db, $sql);
+  $params = array(':user_id' => $user_id);
+  return fetch_all_query($db, $sql, $params);
 }
 
 // ログインユーザーのカート内の特定の商品データを取得
@@ -51,12 +52,12 @@ function get_user_cart($db, $user_id, $item_id){
     ON
       carts.item_id = items.item_id
     WHERE
-      carts.user_id = {$user_id}
+      carts.user_id = :user_id
     AND
-      items.item_id = {$item_id}
+      items.item_id = :item_id
   ";
-
-  return fetch_query($db, $sql);
+  $params = array(':user_id' => $user_id, 'item_id' => $item_id);
+  return fetch_query($db, $sql, $params);
 
 }
 
@@ -82,10 +83,11 @@ function insert_cart($db, $user_id, $item_id, $amount = 1){
         user_id,
         amount
       )
-    VALUES({$item_id}, {$user_id}, {$amount})
+    VALUES(:item_id, :user_id, :amount)
   ";
   // SQL文実行
-  return execute_query($db, $sql);
+  $params = array(':item_id' => $item_id, ':user_id' => $user_id, ':amount' => $amount);
+  return execute_query($db, $sql, $params);
 }
 
 // カート内の商品の数量を変更
@@ -95,13 +97,14 @@ function update_cart_amount($db, $cart_id, $amount){
     UPDATE
       carts
     SET
-      amount = {$amount}
+      amount = :amount
     WHERE
-      cart_id = {$cart_id}
+      cart_id = :cart_id
     LIMIT 1
   ";
   // SQL実行
-  return execute_query($db, $sql);
+  $params = array(':amount' => $amount, ':cart_id' => $cart_id);
+  return execute_query($db, $sql, $params);
 }
 
 // カートを削除
@@ -111,12 +114,12 @@ function delete_cart($db, $cart_id){
     DELETE FROM
       carts
     WHERE
-      cart_id = {$cart_id}
+      cart_id = :cart_id
     LIMIT 1
   ";
-
+  $params = array(':cart_id' => $cart_id);
   // SQL実行
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $params);
 }
 
 // 商品の購入
@@ -149,10 +152,11 @@ function delete_user_carts($db, $user_id){
     DELETE FROM
       carts
     WHERE
-      user_id = {$user_id}
+      user_id = :user_id
   ";
+  $params = array('user_id' => $user_id);
   // SQL実行
-  execute_query($db, $sql);
+  execute_query($db, $sql, $params);
 }
 
 // カート内の合計金額を取得
