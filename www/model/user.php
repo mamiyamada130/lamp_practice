@@ -15,12 +15,12 @@ function get_user($db, $user_id){
     FROM
       users
     WHERE
-      user_id = {$user_id}
+      user_id = :user_id
     LIMIT 1
   ";
-
+  $params = array(':user_id' => $user_id);
   // ユーザーデータ取得
-  return fetch_query($db, $sql);
+  return fetch_query($db, $sql, $params);
 }
 
 // nameからユーザーデータを取得
@@ -35,12 +35,12 @@ function get_user_by_name($db, $name){
     FROM
       users
     WHERE
-      name = '{$name}'
+      name = :name
     LIMIT 1
   ";
-
+  $params = array(':name' => $name);
   // ユーザーデータ取得
-  return fetch_query($db, $sql);
+  return fetch_query($db, $sql, $params);
 }
 
 // PDOを利用して、名前、パスワードのチェック
@@ -132,10 +132,10 @@ function insert_user($db, $name, $password){
   $sql = "
     INSERT INTO
       users(name, password)
-    VALUES ('{$name}', '{$password}');
+    VALUES (:name, :password);
   ";
-
+  $params = array(':name' => $name, ':password' => $password);
   // SQL実行
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $params);
 }
 
