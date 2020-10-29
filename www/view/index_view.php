@@ -1,3 +1,7 @@
+<?php
+  // クリックジャッキング対策
+  header('X-FRAME-OPTIONS: DENY');
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -32,6 +36,7 @@
                   <form action="index_add_cart.php" method="post">
                     <input type="submit" value="カートに追加" class="btn btn-primary btn-block">
                     <input type="hidden" name="item_id" value="<?php print(h($item['item_id'])); ?>">
+                    <input type="hidden" name="token" value="<?php print h($token); ?>">
                   </form>
                   <!-- 在庫がない場合、現在売り切れです。を表示 -->
                 <?php } else { ?>

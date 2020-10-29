@@ -30,5 +30,9 @@ if(is_admin($user) === false){
 
 // itemsテーブルの全商品データを取得
 $items = get_all_items($db);
+
+// トークンを生成
+$token = get_csrf_token();
+
 // ビューの読み込み
 include_once VIEW_PATH . '/admin_view.php';

@@ -24,6 +24,16 @@ $db = get_db_connect();
 // PDOを利用してログインユーザーのデータを取得
 $user = get_login_user($db);
 
+$token = get_post('token');
+
+// post送信されたトークンのチェック
+if(is_valid_csrf_token($token) === false) {
+  redirect_to(LOGIN_URL);
+}
+
+// トークンの破棄
+delete_session();
+
 // POSTされたデータを取得
 $item_id = get_post('item_id');
 
