@@ -1,3 +1,7 @@
+<?php
+  // クリックジャッキング対策
+  header('X-FRAME-OPTIONS: DENY');
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -28,6 +32,7 @@
       </div>
       <!-- 登録ボタン -->
       <input type="submit" value="登録" class="btn btn-primary">
+      <input type="hidden" name="token" value="<?php print h($token); ?>">
     </form>
   </div>
 </body>
