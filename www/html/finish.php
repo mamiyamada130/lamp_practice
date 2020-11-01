@@ -9,6 +9,8 @@ require_once MODEL_PATH . 'user.php';
 require_once MODEL_PATH . 'item.php';
 // cartデータに関する関数ファイルを読み込み
 require_once MODEL_PATH . 'cart.php';
+// orderデータに関する関数ファイルを読み込み
+require_once MODEL_PATH . 'order.php';
 
 // ログインチェックを行うため、セッションを開始
 session_start();
@@ -47,6 +49,10 @@ if(purchase_carts($db, $carts) === false){
 
 // カート内の合計金額を取得
 $total_price = sum_carts($carts);
+
+if(add_order_transaction($db, $user['user_id'], $total_price, $carts) === false){
+  redirect_to(CART_URL);
+}
 
 // ビューの読み込み
 include_once '../view/finish_view.php';
