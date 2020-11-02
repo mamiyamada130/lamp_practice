@@ -31,8 +31,5 @@ if(is_admin($user) === true){
   $orders = get_user_orders($db, $user['user_id']);
 }
 
-// トークンを生成
-$token = get_csrf_token();
-
 // ビューの読み込み
 include_once VIEW_PATH . 'order_view.php';
