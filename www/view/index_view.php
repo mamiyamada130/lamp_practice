@@ -49,6 +49,27 @@
       <?php } ?>
       </div>
     </div>
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <?php if($page > 1){ ?>
+            <li class="page-item"><a class="page-link" href="index.php?page=<?php print h($page - 1); ?>">Prev</a></li>
+          <? } ?>
+          <?php for($i = 1; $i <= $total_pages; $i++){ ?>
+            <?php if($i === $page){ ?>
+              <li class="page-item active">
+                <span class="page-link">
+                <?php print h($page); ?><span class="sr-only">(current)</span>
+                </span>
+              </li>
+            <?php }else{ ?>
+              <li class="page-item"><a class="page-link" href="index.php?page=<?php print h($i); ?>"><?php print h($i); ?></a></li>
+            <?php } ?>
+          <?php } ?>
+          <?php if($page < $total_pages){ ?>
+          <li class="page-item"><a class="page-link" href="index.php?page=<?php print h($page + 1); ?>">Next</a></li>
+          <?php } ?>
+        </ul>
+      </nav>
   </div>
   
 </body>
